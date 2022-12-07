@@ -5,9 +5,85 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: grid;
+  place-items: center;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+main {
+  width: 45rem;
+  margin: 3em;
+  color: #293264;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.question-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.question {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin-block: 0.6em;
+}
+
+.answers-container {
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+}
+
+.answer {
+  margin-inline: 0.5em;
+  padding-inline: 1em;
+  padding-block: 0.35em;
+  border-radius: 0.7em;
+  border: 0.1em solid #293264;
+}
+
+.answer input {
+  display: none;
+}
+
+.checked-answer {
+  background-color: #D6DBF5;
+  border-color: transparent;
+}
+
+hr {
+  width: 100%;
+  margin-block: 0.5em;
+  border: 0.05em solid #DBDEF0;
+}
+
+form button {
+  font-size: 1em;
+  font-weight: 600;
+  padding-block: 1em;
+  padding-inline: 2em;
+  margin: 1.7em;
+  border-radius: 0.9em;
+  border: none;
+  color: #F5F7FB;
+  background-color: #4D5B9E;
+  align-self: center;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #7b87c7;
 }

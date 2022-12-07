@@ -1,29 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import he from 'he';
-import { nanoid } from 'nanoid';
 
 export default function Question(props) {
 
-    const { question, correctAnswer, incorrectAnswers } = props;
+    const { 
+            question, 
+            correctAnswer, 
+            incorrectAnswers, 
+            playerAnswers,
+            updatePlayerAnswers 
+    } = props;
 
-    const answersArray = (() => {
+    
+    const [ answersArray, setAnswersArray ] = useState([]);
+
+    useEffect(() => {
+        randomizeAnswers(incorrectAnswers, correctAnswer)
+    }, [correctAnswer, incorrectAnswers]);
+    
+    function randomizeAnswers(incorrectAnswers, correctAnswer) {
         const newArray = [...incorrectAnswers];
         const randomIndexNumber = Math.floor(Math.random() * newArray.length);
         newArray.splice(randomIndexNumber, 0, correctAnswer);
-        return newArray;
-    })();
+        setAnswersArray(newArray);
+    };
 
     const answerElements = answersArray.map((answer) => (
-        <div key={nanoid()}>
-            <input type='radio' id='test' />
-            <label htmlFor='test'>{answer}</label>
+        <div 
+            key={`${question}${answer}`}
+            className={`answer ${isChecked(answer) && 'checked-answer'}`} 
+        >
+            <input 
+                type='radio' 
+                id={`${question}${answer}`} 
+                name={question}
+                checked={isChecked(answer)}
+                onChange={()=> updatePlayerAnswers(question, answer)}
+            />
+            <label htmlFor={`${question}${answer}`}>
+                {he.decode(answer)}
+            </label>
         </div>
     ));
 
+    function isChecked(answer) {
+        return (playerAnswers[question] === answer) ? true : false;
+    };
+
     return (
-        <div>
-            <p>{he.decode(question)}</p>
-            {answerElements}
+        <div className='question-container'>
+            <h2 className='question'>{he.decode(question)}</h2>
+            <div className='answers-container'>
+                {answerElements}
+            </div>
+            <hr />
         </div>
     );
 };
