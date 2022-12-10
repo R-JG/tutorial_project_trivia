@@ -7,11 +7,11 @@ export default function Question(props) {
             question, 
             correctAnswer, 
             incorrectAnswers, 
+            isGameRunning,
             playerAnswers,
             updatePlayerAnswers 
     } = props;
 
-    
     const [ answersArray, setAnswersArray ] = useState([]);
 
     useEffect(() => {
@@ -25,27 +25,40 @@ export default function Question(props) {
         setAnswersArray(newArray);
     };
 
+    function determineAnswerStyles(answer) {
+        if (isGameRunning) {
+            return (playerAnswers[question] === answer) 
+                ? 'answer--checked' 
+                : '';
+        } else {
+            if (answer === correctAnswer) {
+                return 'answer--correct';
+            } else {
+                return (answer === playerAnswers[question]) 
+                ? 'answer--incorrect' 
+                : 'answer--other';
+            };
+        };
+    };
+
     const answerElements = answersArray.map((answer) => (
         <div 
             key={`${question}${answer}`}
-            className={`answer ${isChecked(answer) && 'checked-answer'}`} 
+            className={`answer ${determineAnswerStyles(answer)}`} 
         >
             <input 
                 type='radio' 
-                id={`${question}${answer}`} 
                 name={question}
-                checked={isChecked(answer)}
-                onChange={()=> updatePlayerAnswers(question, answer)}
+                id={`${question}${answer}`} 
+                onChange={() => {
+                    if (isGameRunning) updatePlayerAnswers(question, answer);
+                }}
             />
             <label htmlFor={`${question}${answer}`}>
                 {he.decode(answer)}
             </label>
         </div>
     ));
-
-    function isChecked(answer) {
-        return (playerAnswers[question] === answer) ? true : false;
-    };
 
     return (
         <div className='question-container'>

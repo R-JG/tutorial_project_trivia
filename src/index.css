@@ -59,9 +59,24 @@ form {
   display: none;
 }
 
-.checked-answer {
+.answer--checked {
   background-color: #D6DBF5;
   border-color: transparent;
+}
+
+.answer--correct {
+  background-color: #94D7A2;
+  border-color: transparent;
+}
+
+.answer--incorrect {
+  opacity: 0.5;
+  background-color: #F8BCBC;
+  border-color: transparent;
+}
+
+.answer--other {
+  opacity: 0.5;
 }
 
 hr {
@@ -86,4 +101,11 @@ form button {
 
 form button:hover {
   background-color: #7b87c7;
+}
+
+.score-prompt {
+  font-size: 1.1em;
+  font-weight: 600;
+  position: relative;
+  bottom: 4rem;
 }
